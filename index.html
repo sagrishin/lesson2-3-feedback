@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FeedBack</title>
+		<meta name="description" content="" />
+		<meta name="keywords" content="" />
+		<meta http-equiv="content-type" content="text/html" charset="utf-8" />
+		<script type="text/JavaScript" src="jquery-2.1.1.min.js"></script>
+		<script type="text/JavaScript">
+			$(document).ready(function() {
+				$("#feedback").submit(function(event) {
+					event.preventDefault();
+					$.ajax({
+						url: "feedback_lib.php",
+						beforeSend: function() {
+							$("#load").fadeIn(400);
+						},
+						type: "post",
+						data: $("#feedback").serialize(),
+						success: function(answer) {
+							$("#answer").html(answer);
+						}
+					}).done(function() {
+						$("#load").fadeOut(350);
+					});
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<form id="feedback" action="" name="feedback" method="post">
+			<input id="email" name="email" placeholder="email" />
+			<br />
+			<textarea id="message" name="message" rows="7" cols="40" placeholder="сообщение"></textarea>
+			<br />
+			<button name="send">отправить</button>
+		</form>
+		<img id="load" src="load.gif" style="display: none;" />
+		<div id="answer"></div>
+	</body>
+</html>
